@@ -44,6 +44,10 @@ member_img_urls = ['https://randomuser.me/api/portraits/women/29.jpg', 'https://
 
 member_img_urls.each {|url| Member.create(name: Faker::Name.name, username: Faker::Internet.username, email: Faker::Internet.email, img_url: url)}
 
-10.times {Hike.create(location: Faker::Address.state, date: Faker::Date.in_date_period, time: generate_random_time(), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id)}
+10.times {Hike.create(location: Faker::Address.state, start_at: Faker::Time.forward(days: 200), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id)}
 
-5.times {Hike.create(location: Faker::Address.state, date: Faker::Date.in_date_period(year: 2019), time: generate_random_time(), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id)}
+5.times {Hike.create(location: Faker::Address.state, start_at: Faker::Time.backward(days: 200), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id)}
+
+15.times {Participation.create(member_id: Member.all.sample.id, hike_id: Hike.all.sample.id)}
+
+20.times {Comment.create(content: Faker::Lorem.sentence(word_count: rand(10..20)), member_id: Member.all.sample.id, hike_id: Hike.all.sample.id)}
