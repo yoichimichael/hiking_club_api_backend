@@ -13,9 +13,37 @@ Hike.delete_all
 Participation.delete_all
 Comment.delete_all
 
-img_urls = ['https://randomuser.me/api/portraits/women/29.jpg', 'https://randomuser.me/api/portraits/women/44.jpg', 'https://randomuser.me/api/portraits/women/37.jpg', 'https://randomuser.me/api/portraits/women/68.jpg', 'https://randomuser.me/api/portraits/women/89.jpg', 'https://randomuser.me/api/portraits/men/54.jpg', 'https://randomuser.me/api/portraits/men/91.jpg', 'https://randomuser.me/api/portraits/men/90.jpg', 'https://randomuser.me/api/portraits/men/58.jpg', 'https://randomuser.me/api/portraits/men/4.jpg']
+def generate_random_time()
+  hour = rand(24)
+  minute = rand(60)
+  new_hour = 0
+  new_minute = 0
+  if hour < 10
+    new_hour = "0#{hour.to_s}"
+  else 
+    new_hour = hour.to_s
+  end
+  if minute < 10
+    new_minute = "0#{minute.to_s}"
+  else
+    new_minute = minute.to_s
+  end
+  "#{new_hour}:#{new_minute}"
+end
 
-img_urls.each {|url| Member.create(name: Faker::Name.name, username: Faker::Internet.username, email: Faker::Internet.email, img_url: url)}
+def generate_dist_under_10()
+  (rand*10).round(1)
+end
 
-10.times {Hike.create(location: Faker::Address.state, date: Faker::Date.in_date_period, time:)}
-10.times {Hike.create(location: , date: Faker::Date.in_date_period(year: 2018))}
+def generate_dur_under_6()
+  (rand*6).round(1)
+end
+
+member_img_urls = ['https://randomuser.me/api/portraits/women/29.jpg', 'https://randomuser.me/api/portraits/women/44.jpg', 'https://randomuser.me/api/portraits/women/37.jpg', 'https://randomuser.me/api/portraits/women/68.jpg', 'https://randomuser.me/api/portraits/women/89.jpg', 'https://randomuser.me/api/portraits/men/54.jpg', 'https://randomuser.me/api/portraits/men/91.jpg', 'https://randomuser.me/api/portraits/men/90.jpg', 'https://randomuser.me/api/portraits/men/58.jpg', 'https://randomuser.me/api/portraits/men/4.jpg']
+
+
+member_img_urls.each {|url| Member.create(name: Faker::Name.name, username: Faker::Internet.username, email: Faker::Internet.email, img_url: url)}
+
+10.times {Hike.create(location: Faker::Address.state, date: Faker::Date.in_date_period, time: generate_random_time(), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id)}
+
+5.times {Hike.create(location: Faker::Address.state, date: Faker::Date.in_date_period(year: 2019), time: generate_random_time(), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id)}
