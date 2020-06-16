@@ -2,12 +2,21 @@ class HikesController < ApplicationController
 
   def index
     hikes = Hike.all
-    render json: hikes, except: [:created_at, :updated_at]
+    render json: hikes.to_json(:include => {
+      :members => {:only => [:name, :username,:img_url,:email]},
+      :host => {:only => [:name,:username,:email,:img_url]},
+      :comments => {:only => [:content]}
+    }, :except => [:created_at,:updated_at])
+    
   end
 
   def show
     hike = Hike.find(params[:id])
-    render json: hike, except: [:created_at, :updated_at]
+    render json: hike.to_json(:include => {
+      :members => {:only => [:name, :username,:img_url,:email]},
+      :host => {:only => [:name,:username,:email,:img_url]},
+      :comments => {:only => [:content]}
+    }, :except => [:created_at,:updated_at])
   end
 
   def create
@@ -19,7 +28,11 @@ class HikesController < ApplicationController
   def update
     hike = Hike.find(params[:id])
     hike.update(post_params)
-    render json: hike, except: [:created_at, :updated_at]
+    render json: hike.to_json(:include => {
+      :members => {:only => [:name, :username,:img_url,:email]},
+      :host => {:only => [:name,:username,:email,:img_url]},
+      :comments => {:only => [:content]}
+    }, :except => [:created_at,:updated_at])
   end
 
   def delete
