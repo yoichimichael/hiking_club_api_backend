@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 require 'faker'
+require 'bcrypt'
 
 Member.delete_all
 Hike.delete_all
@@ -62,7 +63,8 @@ future_hikes_img_urls = [
 ]
 
 
-member_img_urls.each {|url| Member.create(name: Faker::Name.name, username: Faker::Internet.username, password: Faker::Internet.password, email: Faker::Internet.email, img_url: url)}
+
+member_img_urls.each {|url| Member.create(name: Faker::Name.name, username: Faker::Internet.username, password_digest: BCrypt::Password.create('Wc6AmSe30O'), email: Faker::Internet.email, img_url: url)}
 
 future_hikes_img_urls.each{|url| Hike.create(location: Faker::Address.state, start_at: Faker::Time.forward(days: 200), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id, img_url: url)}
 
