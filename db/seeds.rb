@@ -42,7 +42,7 @@ end
 member_img_urls = ['https://randomuser.me/api/portraits/women/29.jpg', 'https://randomuser.me/api/portraits/women/44.jpg', 'https://randomuser.me/api/portraits/women/37.jpg', 'https://randomuser.me/api/portraits/women/68.jpg', 'https://randomuser.me/api/portraits/women/89.jpg', 'https://randomuser.me/api/portraits/men/54.jpg', 'https://randomuser.me/api/portraits/men/91.jpg', 'https://randomuser.me/api/portraits/men/90.jpg', 'https://randomuser.me/api/portraits/men/58.jpg', 'https://randomuser.me/api/portraits/men/4.jpg']
 
 
-member_img_urls.each {|url| Member.create(name: Faker::Name.name, username: Faker::Internet.username, email: Faker::Internet.email, img_url: url)}
+member_img_urls.each {|url| Member.create(name: Faker::Name.name, username: Faker::Internet.username, password: Faker::Internet.password, email: Faker::Internet.email, img_url: url)}
 
 10.times {Hike.create(location: Faker::Address.state, start_at: Faker::Time.forward(days: 200), distance: generate_dist_under_10(), duration: generate_dur_under_6(), description: Faker::Lorem.paragraph(sentence_count: rand(6..10)), host_id: Member.all.sample.id)}
 
