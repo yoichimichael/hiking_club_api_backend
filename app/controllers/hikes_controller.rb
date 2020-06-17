@@ -22,7 +22,11 @@ class HikesController < ApplicationController
   def create
     hike = Hike.new(hike_params)
     hike.save
-    render json: hike, except: [:created_at, :updated_at]
+    render json: hike.to_json(:include => {
+      :members => {:only => [:name, :username,:img_url,:email]},
+      :host => {:only => [:name,:username,:email,:img_url]},
+      :comments => {:only => [:content]}
+    }, :except => [:created_at,:updated_at])
   end
 
   def update
