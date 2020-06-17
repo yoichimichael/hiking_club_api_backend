@@ -2,7 +2,7 @@ class MembersController < ApplicationController
 
   def index
     members = Member.all
-    render json: members, except: [:created_at, :updated_at]
+    render json: members, except: [:created_at, :updated_at, :password_digest]
   end
 
   def show
@@ -13,7 +13,7 @@ class MembersController < ApplicationController
   def create
     member = Member.new(member_params)
     member.save
-    render json: member, except: [:created_at, :updated_at]
+    render json: member, except: [:created_at, :updated_at, :password_digest]
   end
 
   def update
