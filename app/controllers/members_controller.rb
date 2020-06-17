@@ -11,6 +11,7 @@ class MembersController < ApplicationController
   end
 
   def create
+    # byebug
     member = Member.new(member_params)
     member.save
     render json: member, except: [:created_at, :updated_at, :password_digest]
@@ -30,7 +31,7 @@ class MembersController < ApplicationController
   private
  
   def member_params
-    params.require(:member).permit(:name, :username, :email, :img_url)
+    params.require(:member).permit(:name, :username, :password, :email, :img_url)
   end
 
 end

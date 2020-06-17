@@ -1,5 +1,5 @@
 class Member < ApplicationRecord
-  has_secure_password
+  # has_secure_password
 
   has_many :participations
   has_many :hikes, through: :participations
