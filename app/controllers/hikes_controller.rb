@@ -31,7 +31,7 @@ class HikesController < ApplicationController
 
   def update
     hike = Hike.find(params[:id])
-    hike.update(post_params)
+    hike.update(hike_params)
     render json: hike.to_json(:include => {
       :members => {:only => [:name, :username,:img_url,:email]},
       :host => {:only => [:name,:username,:email,:img_url]},
