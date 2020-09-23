@@ -9,6 +9,9 @@
 require 'faker'
 require 'bcrypt'
 
+
+
+
 Member.delete_all
 Hike.delete_all
 Participation.delete_all
